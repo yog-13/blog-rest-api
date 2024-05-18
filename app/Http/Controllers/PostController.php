@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::all();
+        $post = Post::with(['user'])->paginate(10);
 
         if (!$post) {
             return response()->json([
@@ -83,9 +84,14 @@ class PostController extends Controller
             ], 404);
         }
 
+        //dengan menggunakan resource kita dapat menentukan data apa saja yang ingin ditampilkan ke
         return response()->json([
-            'data' => $post,
+            'post' => new PostResource($post),
         ], 200);
+
+        // return response()->json([
+        //     'data' => $post,
+        // ], 201);
     }
 
     /**
