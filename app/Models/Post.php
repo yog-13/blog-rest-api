@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Comment;
+use Laravel\Sanctum\HasApiTokens;
 
 class Post extends Model
 {

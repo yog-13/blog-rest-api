@@ -16,6 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
+        // return request()->user();
+
         $post = Post::with(['user'])->paginate(10);
 
         if (!$post) {
@@ -60,7 +62,8 @@ class PostController extends Controller
             ], 404);
         }
 
-        $post = Post::create($data);
+        // $post = Post::create($data);
+        $post = request()->user()->posts()->create($data);
 
         return response()->json([
             'message' => "Success Create Post Data",
@@ -88,10 +91,6 @@ class PostController extends Controller
         return response()->json([
             'post' => new PostResource($post),
         ], 200);
-
-        // return response()->json([
-        //     'data' => $post,
-        // ], 201);
     }
 
     /**
